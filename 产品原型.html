@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大学生竞赛管理系统 - 产品原型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", Arial;
+        }
+
+        body {
+            background: #f5f7fa;
+        }
+
+        /* 登录页面 */
+        .login {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2f7;
+        }
+
+        .login-box {
+            width: 380px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .form-item {
+            margin-bottom: 20px;
+        }
+
+        .form-item label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-item input {
+            width: 100%;
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 44px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* 主界面 */
+        .main-container {
+            display: none;
+            height: 100vh;
+        }
+
+        /* 左侧菜单 */
+        .sidebar {
+            width: 220px;
+            background: #2c3e50;
+            color: white;
+            padding-top: 10px;
+        }
+
+        .side-logo {
+            padding: 18px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #4a5f7a;
+            margin-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 13px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: #34495e;
+        }
+
+        .menu-item.active {
+            background: #3498db;
+        }
+
+        /* 右侧内容 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-header {
+            height: 55px;
+            background: white;
+            border-bottom: 1px solid #e1e4e8;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+        }
+
+        .page-path {
+            font-size: 15px;
+            color: #333;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .page-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* 卡片样式（原型标准） */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 登录页 -->
+    <div class="login" id="loginPage">
+        <div class="login-box">
+            <div class="login-title">大学生竞赛管理系统</div>
+            <div class="form-item">
+                <label>账号</label>
+                <input type="text" placeholder="请输入账号">
+            </div>
+            <div class="form-item">
+                <label>密码</label>
+                <input type="password" placeholder="请输入密码">
+            </div>
+            <button class="login-btn" onclick="login()">登 录</button>
+        </div>
+    </div>
+
+    <!-- 主界面 -->
+    <div class="main-container" id="mainPage">
+        <div class="sidebar">
+            <div class="side-logo">竞赛管理系统</div>
+            <div class="menu-item active" onclick="switchPage(this,'首页')">首页</div>
+            <div class="menu-item" onclick="switchPage(this,'学院管理')">学院管理</div>
+            <div class="menu-item" onclick="switchPage(this,'学生管理')">学生管理</div>
+            <div class="menu-item" onclick="switchPage(this,'教师管理')">教师管理</div>
+            <div class="menu-item" onclick="switchPage(this,'竞赛分类')">竞赛分类</div>
+            <div class="menu-item" onclick="switchPage(this,'竞赛信息')">竞赛信息</div>
+            <div class="menu-item" onclick="switchPage(this,'竞赛报名')">竞赛报名</div>
+            <div class="menu-item" onclick="switchPage(this,'成绩公示')">成绩公示</div>
+            <div class="menu-item" onclick="switchPage(this,'公告管理')">公告管理</div>
+            <div class="menu-item" onclick="switchPage(this,'系统设置')">系统设置</div>
+        </div>
+
+        <div class="content">
+            <div class="top-header">
+                <div class="page-path" id="pagePath">首页 / 数据概览</div>
+                <div class="user-info">管理员 ▼</div>
+            </div>
+
+            <div class="page-body" id="pageBody">
+                <!-- 首页内容 -->
+                <div class="card">
+                    <div class="card-title">数据概览</div>
+                    <div class="grid">
+                        <div class="stat-item">
+                            <div>竞赛总数</div>
+                            <div class="stat-num">36</div>
+                        </div>
+                        <div class="stat-item">
+                            <div>报名人数</div>
+                            <div class="stat-num">528</div>
+                        </div>
+                        <div class="stat-item">
+                            <div>获奖人数</div>
+                            <div class="stat-num">96</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">最新公告</div>
+                    <table>
+                        <tr>
+                            <th>公告标题</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td>2025年校级学科竞赛报名通知</td>
+                            <td>2025-10-01</td>
+                            <td><button class="btn">查看</button></td>
+                        </tr>
+                        <tr>
+                            <td>系统升级维护通知</td>
+                            <td>2025-09-28</td>
+                            <td><button class="btn">查看</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 登录
+        function login() {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("mainPage").style.display = "flex";
+        }
+
+        // 菜单切换
+        function switchPage(el, name) {
+            let items = document.querySelectorAll(".menu-item");
+            items.forEach(i => i.classList.remove("active"));
+            el.classList.add("active");
+            document.getElementById("pagePath").innerText = name;
+            document.getElementById("pageBody").innerHTML = `
+                <div class="card">
+                    <div class="card-title">${name} 页面</div>
+                    <div style="padding:20px 0;color:#666">${name} 功能模块原型展示区</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
